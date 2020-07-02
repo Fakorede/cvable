@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUserInfosTable extends Migration
+class AddUserIdToUserDetailsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class CreateUserInfosTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_infos', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        Schema::table('user_details', function (Blueprint $table) {
+            $table->foreignId('user_id')->after('id')->constrained();
         });
     }
 
@@ -26,6 +25,8 @@ class CreateUserInfosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_infos');
+        Schema::table('user_details', function (Blueprint $table) {
+            $table->dropForeign(['user_id']);
+        });
     }
 }

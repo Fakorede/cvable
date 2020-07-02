@@ -14,7 +14,12 @@
                         </div>
                     @endif
 
-                    {{ __('You are logged in!') }}
+                    <p>Yay, Thanks for registering with us! 🎉</p>
+
+                    <a href="{{ route('user-detail.create') }}">
+                        <button class="btn btn-primary">Start building your resume now!</button>
+                    </a>
+                    
                 </div>
             </div>
         </div>

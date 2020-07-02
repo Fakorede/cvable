@@ -4,9 +4,15 @@ namespace App\Http\Controllers;
 
 use App\UserDetail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserDetailController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -24,7 +30,7 @@ class UserDetailController extends Controller
      */
     public function create()
     {
-        //
+        return view('user_details.create');
     }
 
     /**
@@ -35,7 +41,22 @@ class UserDetailController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'fullname' => 'required',
+            'email' => 'required',
+        ]);
+
+        $user = Auth::user()->id;
+
+        UserDetail::create([
+            'user_id' => $user,
+            'fullname' => $request->fullname,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'address' => $request->address,
+        ]);
+
+        return redirect()->back()->with('message', 'Your Information has been added successfully!');
     }
 
     /**
